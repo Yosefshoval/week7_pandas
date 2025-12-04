@@ -42,8 +42,7 @@ def add_is_high_value():
 
 
 def rating_mean():
-    """  !!!!!!!!!  """
-    df['mean_country_rating'] = df.groupby('country')['rating'].count()
+    df['mean_country_rating'] = df.groupby('country')['rating'].transform('mean')
     print(df['mean_country_rating'])
 
 
@@ -68,7 +67,7 @@ def run_all():
     replace_total_amount()
     clean_html_tags()
     add_is_high_value()
-    # rating_mean()
+    rating_mean()
     filtering()
     delivery_status()
     save_to_csv()
