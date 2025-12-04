@@ -35,11 +35,9 @@ def clean_html_tags():
 
 
 def add_is_high_value():
-    """  !!!!!!!!!  """
+    global df
     average_amount = df['total_amount'].mean()
-    print(average_amount)
-    df['high_value_order'] = True if [df['total_amount'] > average_amount] else False
-    print(df['high_value_order'].head(20))
+    df = df.assign(high_value_order = [True if i > average_amount else False for i in df['total_amount']])
 
 
 
@@ -59,17 +57,22 @@ def delivery_status():
     df = df.assign(delivery_status = ['delayed' if int(i) > 7 else 'on_time' for i in df['shipping_days']])
 
 
-df.to_csv(finish_file)
+def save_to_csv():
+    df.to_csv(finish_file)
 
 
-if __name__ == '__main__':
+def run_all():
     converting()
     add_month_col()
     replace_coupon_col()
     replace_total_amount()
     clean_html_tags()
     add_is_high_value()
-    rating_mean()
+    # rating_mean()
     filtering()
     delivery_status()
+    save_to_csv()
 
+
+if __name__ == '__main__':
+    run_all()
